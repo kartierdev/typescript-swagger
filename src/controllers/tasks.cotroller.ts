@@ -7,14 +7,19 @@ export const getTasks: Handler = (req, res) => {
     return res.json(data)
 }
 
-export const createTasks: Handler = (req, res) => {
-    const {name, description} = req.body
+export const createTask: Handler = (req, res) => {
+    const { name, description } = req.body
 
     const newTask = {
         name,
         description,
         id: nanoid()
     }
-    res.json(newTask)
+    try {
+        getConnection().get('tasks').push(newTask).write()
+        res.json(newTask)
+    } catch (error) {
+        res.status(500).send(error)
+    }
 }
 
