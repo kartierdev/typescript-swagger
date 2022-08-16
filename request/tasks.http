@@ -1,8 +1,8 @@
+# Request 
 
 GET http://localhost:3000/tasks 
 
 ### 
-
 POST http://localhost:3000/tasks
 Content-Type: application/json 
 
@@ -10,3 +10,10 @@ Content-Type: application/json
     "name": "I realy practing python",
     "description": "Codewars and Udemy"
 }
+
+### 
+GET http://localhost:3000/tasks/kHIwIE0xQ3UnXoHrFeUAw
+
+###
+DELETE  http://localhost:3000/tasks/kHIwIE0xQ3UnXoHrFeUAw
+

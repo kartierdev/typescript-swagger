@@ -1,24 +1,24 @@
 import { Router } from "express";
-import { getTasks, createTask } from "../controllers/tasks.cotroller";
-const router = Router()
+import {
+  getTasks,
+  createTask,
+  getTask,
+  deleteTask,
+  updateTask,
+  count,
+} from "../controllers/tasks.cotroller";
+const router = Router();
 
+router.get("/tasks", getTasks);
 
-router.get('/tasks', getTasks)
+router.get("/tasks/count", count);
 
-router.get('/tasks/count', (req, res) => {
-    res.send('Hello')
-})
-router.post('/tasks', createTask)
-router.get('/tasks/:id', (req, res) => {
-    res.send('Hello')
-})
-router.delete('/tasks/:id', (req, res) => {
-    res.send('Hello')
-})
-router.put('/tasks/:id', (req, res) => {
-    res.send('Hello')
-})
+router.post("/tasks", createTask);
 
+router.get("/tasks/:id", getTask);
 
+router.delete("/tasks/:id", deleteTask);
 
-export default router
+router.put("/tasks/:id", updateTask);
+
+export default router;
