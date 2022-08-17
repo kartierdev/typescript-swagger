@@ -13,32 +13,40 @@ const router = Router();
 /**
  * @swagger
  * components:
- *  shcemas:
- *     Task:
- *       type: object
- *       properties:
- *         id:
-*            type: string
-*            description: the auto-generated id of task
+ *  schemas:
+ *    Task:
+ *      type: object
+ *      properties:
+ *        id:
+ *          type: string
+ *          description: the auto-generated id of task
  *        name: 
- *           type: string
- *           description: the name of the task
+ *          type: string
+ *          description: the name of the task
  *        description:
- *           
+ *          type: string
+ *          description: the description of the task 
+ *      required:
+ *        - name 
+ *        - description
+ *      example:
+ *        id : o1ZHug76dW-aH_HPhqBN7
+ *        name: All tasks 
+ *        description: I have all tasks 
  */
 
 /**
  * @swagger
  * /tasks:
- *  get:
- *   sumary: Return a Task list
- *   response:
- *    200:
- *      description: the list of tasks
- *      content:
- *        application/json
- *          schema: 
- *            type: aaray
+ *  get: 
+ *    sumary: Return a Task list
+ *    responses:
+ *      200:
+ *        description: the list of tasks
+ *        content:
+ *          application/json:
+ *            schema: 
+ *              type: array
  */
 
 router.get("/tasks", getTasks);
