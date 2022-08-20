@@ -13,136 +13,186 @@ const router = Router();
 /**
  * @swagger
  * components:
- *  schemas:
+ *  schemas: 
  *    Task:
  *      type: object
  *      properties:
- *        id:
- *          type: string
- *          description: the auto-generated id of task
- *        name:
- *          type: string
- *          description: the name of the task
- *        description:
- *          type: string
- *          description: the description of the task
+ *         id:
+ *           type: string
+ *           description: the auto-generated id of the task
+ *         name: 
+ *           type: string
+ *           description: the name of the task
+ *         description: 
+ *            type: string
+ *            description: the description of the task
  *      required:
  *        - name
  *        - description
  *      example:
- *        id : o1ZHug76dW-aH_HPhqBN7
- *        name: All tasks
- *        description: I have all tasks
- *    TasksNotFound: 
- *       type: object
- *       properties:
- *          msg:
- *           type: string
- *           description: a message not found tasks 
- *       example:
- *         msg: Task was not found
+ *        id: kHIwIE0xQ3UnXoHrFeUAw
+ *        name: My fisrt task 
+ *        description: more tasks
+ *    TaskNotFound:
+ *      type: object
+ *      properties:
+ *        msg: 
+ *          type: string
+ *          description: a message for the not found task
+ *      example:
+ *        msg: Task was not found 
  *  parameters:
  *    taskId:
  *      in: path
  *      name: id
  *      required: true
- *      schema: 
+ *      schema:
  *        type: string
- *      description: The task id 
+ *        description: the task id
  */
 
 /**
  * @swagger
  * tags:
- *  name: Tasks
- *  description: Tasks endpoint
+ *  name: Tasks 
+ *  description: Tasks endpoint 
  */
+
 /**
  * @swagger
  * /tasks:
  *  get:
- *    sumary: Return a Task list
+ *    summary: Return a list of tasks
  *    tags: [Tasks]
  *    responses:
  *      200:
- *        description: the list of tasks
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/Task'
- */
-
+ *        description: The list of tasks 
+ *        content: 
+ *           application/json:
+ *              schema: 
+ *                 type: array
+ *                 items:
+ *                   $ref: '#/components/schemas/Task'
+ */ 
 router.get("/tasks", getTasks);
 
 /**
  * @swagger
  * /tasks/count:
- *  get:
- *    sumary: Get total tasks count
+ *  get: 
+ *    summary: Get total tasks
  *    tags: [Tasks]
- *    responses:
- *       200: 
- *         description: The total number of tasks
- *         content: 
- *            text/plane: 
- *               schema:
- *                type: integer 
- *                example: 15
+ *    responses: 
+ *      200:
+ *       description: The total number of task 
+ *       content:
+ *          text/plane:
+ *            schema:
+ *              type: integer
+ *            example: 15
  */
 router.get("/tasks/count", count);
 
 /**
  * @swagger
- * /tasks: 
- *  post:
- *    sumary: Create a new task
- *    tags: [Tasks]
- *    requestBody: 
+ * /tasks:
+ *  post: 
+ *   summary: Create a new task
+ *   tags: [Tasks]
+ *   requestBody:
  *      required: true
  *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Task'
+ *   responses: 
+ *     200:
+ *       description: The task was created successfully
+ *       content:
  *         application/json:
- *           schema: 
- *             $ref: "#/components/schemas/Task"
- *    responses: 
- *      200:
- *        description: The successful createTask 
- *        content: 
- *          application/json:
  *            schema:
- *              $ref: "#/components/schemas/Task"
- *      500:
- *        description: The some error occurred
+ *             $ref: '#/components/schemas/Task'
+ *     500:
+ *      description: The task could not be created successfully
  */
 router.post("/tasks", createTask);
 
 /**
  * @swagger
  * /tasks/{id}:
- *  get: 
- *    sumary: Get task by id 
+ *  get:
+ *   summary: Get a only specified task 
+ *   tags: [Tasks]
+ *   parameters:
+ *     - $ref: '#/components/parameters/taskId'
+ *   responses: 
+ *     200:
+ *       description: the task was successfully retrieved
+ *       content:
+ *         application/json:
+ *           schema: 
+ *             $ref: '#/components/schemas/Task'
+ *     404:
+ *       description: the task could not be retrieved
+ *       content:
+ *         application/json:
+ *           schema: 
+ *             $ref: '#/components/schemas/TaskNotFound'
+ */
+router.get("/tasks/:id", getTask);
+
+/**
+ * @swagger
+ * /tasks/{id}:
+ *  delete: 
+ *    summary: Delete a one task
  *    tags: [Tasks]
  *    parameters:
  *      - $ref: '#/components/parameters/taskId'
- *    responses: 
+ *    responses:
  *      200:
- *        description: The task was successfully retrieved
+ *        description: the task was successfully deleted
  *        content:
  *          application/json:
- *             schema: 
- *               $ref: "#/components/schemas/Task"
+ *            schema: 
+ *              $ref: '#/components/schemas/Task'
  *      404:
- *      description: The task could not be retrieved
+ *        description: the task was not found
+ *        content:
+ *          application/json:
+ *            schema: 
+ *              $ref: '#/components/schemas/TaskNotFound'
+ */
+router.delete("/tasks/:id", deleteTask);
+
+/**
+ * @swagger
+ * /tasks/{id}:
+ *  put:
+ *   summary: Update a task by id
+ *   tags: [Tasks]
+ *   parameters:
+ *     - $ref: '#/components/schemas/taskid'
+ *   requestBody:
+ *     required: true
+ *     content:
+ *       application/json:
+ *         schema: 
+ *          $ref: '#/components/schemas/Task'
+ *   responses:
+ *    200:
+ *      description: Task updated 
  *      content:
  *        application/json:
- *           schema: 
- *             
+ *          schema: 
+ *            $ref: '#/components/schemas/Task'
+ *    400:
+ *      description: Task not found
+ *      content:
+ *        application/json:
+ *          schema: 
+ *            $ref: '#/components/schemas/TaskNotFound'
  */
-
-router.get("/tasks/:id", getTask);
-
-router.delete("/tasks/:id", deleteTask);
 
 router.put("/tasks/:id", updateTask);
 

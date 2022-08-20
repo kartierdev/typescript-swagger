@@ -44,11 +44,11 @@ export const deleteTask: Handler = (req, res) => {
     .find({ id: req.params.id })
     .value();
   if (!taskFound) return res.status(404).json({ msg: "Task not found" });
-  const deleteTasks = getConnection()
+  const deleteTask = getConnection()
     .get("tasks")
     .remove({ id: req.params.id })
     .write();
-  res.json(deleteTasks);
+  res.json(deleteTask[0]);
 };
 
 export const updateTask: Handler = (req, res) => {
